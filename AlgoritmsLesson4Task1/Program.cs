@@ -29,6 +29,7 @@ namespace AlgoritmsLesson4Task1
                 hashStrings.Add(i.ToString());
             }
 
+
             GetStrToFind();
         }
 
