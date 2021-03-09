@@ -82,10 +82,7 @@ namespace AlgoritmsLesson4Task2
             return root;
         }
 
-        public void PrintTree()
-        {
-            throw new NotImplementedException();
-        }
+        
         /// <summary>
         /// Удаление нода с указанным значением
         /// </summary>
@@ -102,6 +99,12 @@ namespace AlgoritmsLesson4Task2
             //Удаление листа
             if (treeNode.LeftChild == null && treeNode.RightChild == null)
             {
+                if (treeNode == root)
+                {
+                    root = null;
+                    return;
+                }
+
                 TreeNode parentNode = treeNode.Parent;
                 
                 if (parentNode.LeftChild == treeNode) parentNode.LeftChild = null;
@@ -116,8 +119,9 @@ namespace AlgoritmsLesson4Task2
             {
                 TreeNode parentNode = treeNode.Parent;
 
-                if (parentNode.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
-                else parentNode.RightChild = treeNode.RightChild;
+                if (parentNode?.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
+                else if (parentNode?.RightChild == treeNode) parentNode.RightChild = treeNode.RightChild;
+                else if (treeNode == root) root = treeNode.LeftChild;
 
                 TreeNode leftChildCurrentNode = treeNode.LeftChild;
                 leftChildCurrentNode.Parent = parentNode;
@@ -130,8 +134,12 @@ namespace AlgoritmsLesson4Task2
             {
                 TreeNode parentNode = treeNode.Parent;
 
-                if (parentNode.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
-                else parentNode.RightChild = treeNode.RightChild;
+                //if (parentNode.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
+                //else parentNode.RightChild = treeNode.RightChild;
+
+                if (parentNode?.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
+                else if (parentNode?.RightChild == treeNode) parentNode.RightChild = treeNode.RightChild;
+                else if (treeNode == root) root = treeNode.RightChild;
 
                 TreeNode rightChildCurrentNode = treeNode.RightChild;
                 rightChildCurrentNode.Parent = parentNode;
@@ -153,8 +161,9 @@ namespace AlgoritmsLesson4Task2
 
                 TreeNode parentNodeToRemove = treeNode.Parent;
 
-                if (parentNodeToRemove.LeftChild == treeNode) parentNodeToRemove.LeftChild = nodeToReplace;
-                else parentNodeToRemove.RightChild = nodeToReplace;
+                if (parentNodeToRemove?.LeftChild == treeNode) parentNodeToRemove.LeftChild = nodeToReplace;
+                else if (parentNodeToRemove?.RightChild == treeNode) parentNodeToRemove.RightChild = nodeToReplace;
+                else if (treeNode == root) root = nodeToReplace;
 
                 return;
             }
@@ -199,6 +208,14 @@ namespace AlgoritmsLesson4Task2
                     currentNode = currentNode.LeftChild;
                 }
             }
+        }
+
+        /// <summary>
+        /// Вывод дерева в консоль
+        /// </summary>
+        public void PrintTree()
+        {
+            throw new NotImplementedException();
         }
     }
 }
