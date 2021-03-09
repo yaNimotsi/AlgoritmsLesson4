@@ -82,6 +82,67 @@ namespace AlgoritmsLesson4Task2
 
             if (treeNode == null) return;
 
+            //Проверка удаления корневого нода
+            if (treeNode == root)
+            {
+                if (treeNode.RightChild != null)
+                {
+
+                }
+            }
+
+            //Удаление листа
+            if (treeNode.LeftChild == null && treeNode.RightChild == null)
+            {
+                TreeNode parentNode = treeNode.Parent;
+                
+                if (parentNode.LeftChild == treeNode) parentNode.LeftChild = null;
+                else parentNode.RightChild = null;
+            }
+
+
+            //Удаление нода не имеющего правого поддерева
+            if (treeNode.LeftChild != null && treeNode.RightChild == null)
+            {
+                TreeNode parentNode = treeNode.Parent;
+
+                if (parentNode.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
+                else parentNode.RightChild = treeNode.RightChild;
+
+                TreeNode leftChildCurrentNode = treeNode.LeftChild;
+                leftChildCurrentNode.Parent = parentNode;
+            }
+
+            //Удаление нода не имеющего левого поддерева
+            if (treeNode.LeftChild == null && treeNode.RightChild != null)
+            {
+                TreeNode parentNode = treeNode.Parent;
+
+                if (parentNode.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
+                else parentNode.RightChild = treeNode.RightChild;
+
+                TreeNode rightChildCurrentNode = treeNode.RightChild;
+                rightChildCurrentNode.Parent = parentNode;
+            }
+
+            //Удаление нода с двумя ветками
+            if (treeNode.LeftChild != null && treeNode.RightChild != null)
+            {
+                TreeNode parentNode = treeNode.Parent;
+
+                if (parentNode.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
+                else parentNode.RightChild = treeNode.RightChild;
+
+                TreeNode rightChildCurrentNode = treeNode.RightChild;
+                rightChildCurrentNode.Parent = parentNode;
+            }
+
+
+
+
+
+
+
             TreeNode nodeParent = treeNode?.Parent ?? null;
             TreeNode leftChild = treeNode?.LeftChild ?? null;
             TreeNode rightChild = treeNode?.RightChild ?? null;
