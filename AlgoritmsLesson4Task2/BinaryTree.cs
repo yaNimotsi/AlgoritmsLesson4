@@ -82,15 +82,7 @@ namespace AlgoritmsLesson4Task2
 
             if (treeNode == null) return;
 
-            //Проверка удаления корневого нода
-            if (treeNode == root)
-            {
-                if (treeNode.RightChild != null)
-                {
-
-                }
-            }
-
+            
             //Удаление листа
             if (treeNode.LeftChild == null && treeNode.RightChild == null)
             {
@@ -128,42 +120,32 @@ namespace AlgoritmsLesson4Task2
             //Удаление нода с двумя ветками
             if (treeNode.LeftChild != null && treeNode.RightChild != null)
             {
-                TreeNode parentNode = treeNode.Parent;
+                TreeNode nodeToReplace = FindMaxOnRight(treeNode);
 
-                if (parentNode.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
-                else parentNode.RightChild = treeNode.RightChild;
+                TreeNode parentNodfeToReplace = nodeToReplace.Parent;
+                parentNodfeToReplace.RightChild = null;
 
-                TreeNode rightChildCurrentNode = treeNode.RightChild;
-                rightChildCurrentNode.Parent = parentNode;
-            }
+                nodeToReplace.Parent = treeNode.Parent;
+                nodeToReplace.RightChild = treeNode.RightChild;
+                nodeToReplace.LeftChild = treeNode.LeftChild;
 
+                TreeNode parentNodeToRemove = treeNode.Parent;
 
-
-
-
-
-
-            TreeNode nodeParent = treeNode?.Parent ?? null;
-            TreeNode leftChild = treeNode?.LeftChild ?? null;
-            TreeNode rightChild = treeNode?.RightChild ?? null;
-
-
-            if (nodeParent.LeftChild == treeNode)   //Удаление из левой ветки
-            {
-
-                if (leftChild == null && rightChild == null)
-                {
-                    nodeParent.LeftChild = null;
-                }
-            }
-            else    //Удаление из правой ветики
-            {
-                if (leftChild == null && rightChild == null)
-                {
-                    nodeParent.RightChild = null;
-                }
+                if (parentNodeToRemove.LeftChild == treeNode) parentNodeToRemove.LeftChild = nodeToReplace;
+                else parentNodeToRemove.RightChild = nodeToReplace;
             }
             
+        }
+
+        private static TreeNode FindMaxOnRight(TreeNode startNode)
+        {
+            TreeNode currentNod = startNode.LeftChild;
+
+            while (currentNod.RightChild != null)
+            {
+                currentNod = currentNod.RightChild;
+            }
+            return currentNod;
         }
 
         private static TreeNode FindNodeByValue(int value, TreeNode root)
