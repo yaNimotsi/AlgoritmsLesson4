@@ -8,6 +8,10 @@ namespace AlgoritmsLesson4Task2
     {
         TreeNode root;
 
+        /// <summary>
+        /// Добавление нода, с указанным значением в дерево
+        /// </summary>
+        /// <param name="value"></param>
         public void AddItem(int value)
         {
             TreeNode treeNode = new TreeNode()
@@ -57,6 +61,11 @@ namespace AlgoritmsLesson4Task2
             }
         }
 
+        /// <summary>
+        /// Получение ссылки на нод, с указанным значением.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public TreeNode GetNodeByValue(int value)
         {
             if (root == null) return null;
@@ -64,6 +73,10 @@ namespace AlgoritmsLesson4Task2
             return FindNodeByValue(value, root);
         }
 
+        /// <summary>
+        /// Возврат корня дерева
+        /// </summary>
+        /// <returns></returns>
         public TreeNode GetRoot()
         {
             return root;
@@ -73,14 +86,17 @@ namespace AlgoritmsLesson4Task2
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Удаление нода с указанным значением
+        /// </summary>
+        /// <param name="value">Значение нода, которое следует удалить</param>
         public void RemoveItem(int value)
         {
-            if (root == null) return;
+            if (root == null) return;   //Выход при пустом дереве
 
-            TreeNode treeNode = FindNodeByValue(value, root);
+            TreeNode treeNode = FindNodeByValue(value, root);   //Полуение ссылки на нод, который требуется удалить
 
-            if (treeNode == null) return;
+            if (treeNode == null) return;   //Если ссылка пустая, то выходим
 
             
             //Удаление листа
@@ -90,6 +106,8 @@ namespace AlgoritmsLesson4Task2
                 
                 if (parentNode.LeftChild == treeNode) parentNode.LeftChild = null;
                 else parentNode.RightChild = null;
+
+                return;
             }
 
 
@@ -103,6 +121,8 @@ namespace AlgoritmsLesson4Task2
 
                 TreeNode leftChildCurrentNode = treeNode.LeftChild;
                 leftChildCurrentNode.Parent = parentNode;
+
+                return;
             }
 
             //Удаление нода не имеющего левого поддерева
@@ -115,6 +135,8 @@ namespace AlgoritmsLesson4Task2
 
                 TreeNode rightChildCurrentNode = treeNode.RightChild;
                 rightChildCurrentNode.Parent = parentNode;
+
+                return;
             }
 
             //Удаление нода с двумя ветками
@@ -133,10 +155,16 @@ namespace AlgoritmsLesson4Task2
 
                 if (parentNodeToRemove.LeftChild == treeNode) parentNodeToRemove.LeftChild = nodeToReplace;
                 else parentNodeToRemove.RightChild = nodeToReplace;
+
+                return;
             }
             
         }
-
+        /// <summary>
+        /// Поиск нода находящегося максимально глубоко в левом потомке правой подведке
+        /// </summary>
+        /// <param name="startNode"> Нод, с которого начинается поиск</param>
+        /// <returns></returns>
         private static TreeNode FindMaxOnRight(TreeNode startNode)
         {
             TreeNode currentNod = startNode.LeftChild;
@@ -148,6 +176,12 @@ namespace AlgoritmsLesson4Task2
             return currentNod;
         }
 
+        /// <summary>
+        /// Поиск нода по входному значению. Если совпадений не найдено, вернет null
+        /// </summary>
+        /// <param name="value">Искомое значение</param>
+        /// <param name="root">Корень дерева</param>
+        /// <returns></returns>
         private static TreeNode FindNodeByValue(int value, TreeNode root)
         {
             TreeNode currentNode = root;
