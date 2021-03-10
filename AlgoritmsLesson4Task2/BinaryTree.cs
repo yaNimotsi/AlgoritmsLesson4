@@ -4,10 +4,14 @@ using System.Text;
 
 namespace AlgoritmsLesson4Task2
 {
-    class BinaryTree : ITree
+    public class BinaryTree : ITree
     {
-        TreeNode root;
+        TreeNode _root;
 
+        public TreeNode Root
+        {
+            get { return _root; }
+        }
         /// <summary>
         /// Добавление нода, с указанным значением в дерево
         /// </summary>
@@ -23,13 +27,13 @@ namespace AlgoritmsLesson4Task2
                 Parent = null
             };
 
-            if (root == null)
+            if (_root == null)
             {
-                root = treeNode;
+                _root = treeNode;
             }
             else
             {
-                TreeNode currentNode = root;
+                TreeNode currentNode = _root;
                 while (true)
                 {
                     if (value > currentNode.Value)
@@ -73,9 +77,9 @@ namespace AlgoritmsLesson4Task2
         /// <returns></returns>
         public TreeNode GetNodeByValue(int value)
         {
-            if (root == null) return null;
+            if (_root == null) return null;
 
-            return FindNodeByValue(value, root);
+            return FindNodeByValue(value, _root);
         }
 
         /// <summary>
@@ -84,7 +88,7 @@ namespace AlgoritmsLesson4Task2
         /// <returns></returns>
         public TreeNode GetRoot()
         {
-            return root;
+            return _root;
         }
 
 
@@ -94,9 +98,9 @@ namespace AlgoritmsLesson4Task2
         /// <param name="value">Значение нода, которое следует удалить</param>
         public void RemoveItem(int value)
         {
-            if (root == null) return;   //Выход при пустом дереве
+            if (_root == null) return;   //Выход при пустом дереве
 
-            TreeNode treeNode = FindNodeByValue(value, root);   //Полуение ссылки на нод, который требуется удалить
+            TreeNode treeNode = FindNodeByValue(value, _root);   //Полуение ссылки на нод, который требуется удалить
 
             if (treeNode == null) return;   //Если ссылка пустая, то выходим
 
@@ -104,9 +108,9 @@ namespace AlgoritmsLesson4Task2
             //Удаление листа
             if (treeNode.LeftChild == null && treeNode.RightChild == null)
             {
-                if (treeNode == root)
+                if (treeNode == _root)
                 {
-                    root = null;
+                    _root = null;
                     return;
                 }
 
@@ -126,7 +130,7 @@ namespace AlgoritmsLesson4Task2
 
                 if (parentNode?.LeftChild == treeNode)
                     parentNode.LeftChild = treeNode.LeftChild;
-                else if (treeNode == root)
+                else if (treeNode == _root)
                     treeNode.Depth = 1;
 
                 TreeNode leftChildCurrentNode = treeNode.LeftChild;
@@ -146,8 +150,8 @@ namespace AlgoritmsLesson4Task2
 
                 if (parentNode?.RightChild == treeNode)
                     parentNode.RightChild = treeNode.RightChild;
-                else if (treeNode == root)
-                    root = treeNode.RightChild;
+                else if (treeNode == _root)
+                    _root = treeNode.RightChild;
 
                 TreeNode rightChildCurrentNode = treeNode.RightChild;
                 rightChildCurrentNode.Parent = parentNode;
@@ -174,7 +178,7 @@ namespace AlgoritmsLesson4Task2
 
                 if (parentNodeToRemove?.LeftChild == treeNode) parentNodeToRemove.LeftChild = nodeToReplace;
                 else if (parentNodeToRemove?.RightChild == treeNode) parentNodeToRemove.RightChild = nodeToReplace;
-                else if (treeNode == root) root = nodeToReplace;
+                else if (treeNode == _root) _root = nodeToReplace;
 
                 return;
             }
@@ -232,21 +236,21 @@ namespace AlgoritmsLesson4Task2
             Console.WriteLine();
             Console.WriteLine();
 
-            PrintTreeRecurs(root);
+            PrintTreeRecurs(_root);
         }
 
         private void PrintTreeUnRecurs()
         {
-            if (root == null) return;
+            if (_root == null) return;
 
-            TreeNode parentNode = root;
-            TreeNode currentNode = root.LeftChild;
+            TreeNode parentNode = _root;
+            TreeNode currentNode = _root.LeftChild;
 
-            Console.WriteLine($"R({root.Value})");
+            Console.WriteLine($"R({_root.Value})");
 
             HashSet<TreeNode> isUsed = new HashSet<TreeNode>();
 
-            isUsed.Add(root);
+            isUsed.Add(_root);
 
             string indent = "";
             char vector = 'L';

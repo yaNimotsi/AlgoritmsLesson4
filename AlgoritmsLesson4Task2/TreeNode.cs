@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AlgoritmsLesson4Task2
 {
-    class TreeNode
+    public class TreeNode
     {
         int _value;
         int _depth;
