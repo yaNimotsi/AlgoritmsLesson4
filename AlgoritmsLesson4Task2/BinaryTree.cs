@@ -242,7 +242,7 @@ namespace AlgoritmsLesson4Task2
             TreeNode parentNode = root;
             TreeNode currentNode = root.LeftChild;
 
-            Console.WriteLine($"R ({root.Value})");
+            Console.WriteLine($"R({root.Value})");
 
             HashSet<TreeNode> isUsed = new HashSet<TreeNode>();
 
@@ -256,7 +256,7 @@ namespace AlgoritmsLesson4Task2
                 if (!isUsed.Contains(currentNode))
                 {
                     indent = new string(' ', (currentNode.Depth-1) * 3);
-                    Console.WriteLine($"|{indent} {vector}({currentNode.Value})");
+                    Console.WriteLine($"{indent} {vector}({currentNode.Value})");
                     isUsed.Add(currentNode);
                 }
 
