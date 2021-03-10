@@ -17,6 +17,7 @@ namespace AlgoritmsLesson4Task2
             TreeNode treeNode = new TreeNode()
             {
                 Value = value,
+                Depth = 1,
                 LeftChild = null,
                 RightChild = null,
                 Parent = null
@@ -35,12 +36,14 @@ namespace AlgoritmsLesson4Task2
                     {
                         if (currentNode.RightChild == null)
                         {
+                            treeNode.Depth++;
                             currentNode.RightChild = treeNode;
                             treeNode.Parent = currentNode;
                             return;
                         }
                         else
                         {
+                            treeNode.Depth++;
                             currentNode = currentNode.RightChild;
                         }
                     }
@@ -48,12 +51,14 @@ namespace AlgoritmsLesson4Task2
                     {
                         if (currentNode.LeftChild == null)
                         {
+                            treeNode.Depth++;
                             currentNode.LeftChild = treeNode;
                             treeNode.Parent = currentNode;
                             return;
                         }
                         else
                         {
+                            treeNode.Depth++;
                             currentNode = currentNode.LeftChild;
                         }
                     }
@@ -82,7 +87,7 @@ namespace AlgoritmsLesson4Task2
             return root;
         }
 
-        
+
         /// <summary>
         /// Удаление нода с указанным значением
         /// </summary>
@@ -95,7 +100,7 @@ namespace AlgoritmsLesson4Task2
 
             if (treeNode == null) return;   //Если ссылка пустая, то выходим
 
-            
+
             //Удаление листа
             if (treeNode.LeftChild == null && treeNode.RightChild == null)
             {
@@ -106,7 +111,7 @@ namespace AlgoritmsLesson4Task2
                 }
 
                 TreeNode parentNode = treeNode.Parent;
-                
+
                 if (parentNode.LeftChild == treeNode) parentNode.LeftChild = null;
                 else parentNode.RightChild = null;
 
@@ -119,12 +124,14 @@ namespace AlgoritmsLesson4Task2
             {
                 TreeNode parentNode = treeNode.Parent;
 
-                if (parentNode?.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
-                else if (parentNode?.RightChild == treeNode) parentNode.RightChild = treeNode.RightChild;
-                else if (treeNode == root) root = treeNode.LeftChild;
+                if (parentNode?.LeftChild == treeNode)
+                    parentNode.LeftChild = treeNode.LeftChild;
+                else if (treeNode == root)
+                    treeNode.Depth = 1;
 
                 TreeNode leftChildCurrentNode = treeNode.LeftChild;
                 leftChildCurrentNode.Parent = parentNode;
+                leftChildCurrentNode.Depth--;
 
                 return;
             }
@@ -137,12 +144,14 @@ namespace AlgoritmsLesson4Task2
                 //if (parentNode.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
                 //else parentNode.RightChild = treeNode.RightChild;
 
-                if (parentNode?.LeftChild == treeNode) parentNode.LeftChild = treeNode.LeftChild;
-                else if (parentNode?.RightChild == treeNode) parentNode.RightChild = treeNode.RightChild;
-                else if (treeNode == root) root = treeNode.RightChild;
+                if (parentNode?.RightChild == treeNode)
+                    parentNode.RightChild = treeNode.RightChild;
+                else if (treeNode == root)
+                    root = treeNode.RightChild;
 
                 TreeNode rightChildCurrentNode = treeNode.RightChild;
                 rightChildCurrentNode.Parent = parentNode;
+                rightChildCurrentNode.Depth--;
 
                 return;
             }
@@ -156,8 +165,10 @@ namespace AlgoritmsLesson4Task2
                 parentNodfeToReplace.RightChild = null;
 
                 nodeToReplace.Parent = treeNode.Parent;
+                nodeToReplace.Depth = treeNode.Depth;
                 nodeToReplace.RightChild = treeNode.RightChild;
                 nodeToReplace.LeftChild = treeNode.LeftChild;
+
 
                 TreeNode parentNodeToRemove = treeNode.Parent;
 
@@ -167,8 +178,8 @@ namespace AlgoritmsLesson4Task2
 
                 return;
             }
-            
         }
+
         /// <summary>
         /// Поиск нода находящегося максимально глубоко в левом потомке правой подведке
         /// </summary>
@@ -215,13 +226,72 @@ namespace AlgoritmsLesson4Task2
         /// </summary>
         public void PrintTree()
         {
-            //Понять сколько этажей
-            //в очередь добавляем все ноды (вместо пустых веток нужен null)
-            //постепенно формировать массив строк
-            //Считать, что на каждом "этаже" всегда есть по 2 ветки от родительского нода
-            //В таком случае для этажа выше расположение нода считаться по формуле (макс длина символов / на возможное кол-во нодов)
-            //с учетом колв-ва символов для нода
-            throw new NotImplementedException();
+            PrintTreeUnRecurs();
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+
+            PrintTreeRecurs(root);
+        }
+
+        private void PrintTreeUnRecurs()
+        {
+            if (root == null) return;
+
+            TreeNode parentNode = root;
+            TreeNode currentNode = root.LeftChild;
+
+            Console.WriteLine($"R ({root.Value})");
+
+            HashSet<TreeNode> isUsed = new HashSet<TreeNode>();
+
+            isUsed.Add(root);
+
+            string indent = "";
+            char vector = 'L';
+
+            while (true)
+            {
+                if (!isUsed.Contains(currentNode))
+                {
+                    indent = new string(' ', (currentNode.Depth-1) * 3);
+                    Console.WriteLine($"|{indent} {vector}({currentNode.Value})");
+                    isUsed.Add(currentNode);
+                }
+
+                if (currentNode.LeftChild != null && !isUsed.Contains(currentNode.LeftChild))
+                {
+                    vector = 'L';
+                    currentNode = currentNode.LeftChild;
+                    parentNode = currentNode.Parent;
+                }
+                else if (currentNode.RightChild != null && !isUsed.Contains(currentNode.RightChild))
+                {
+                    vector = 'R';
+                    currentNode = currentNode.RightChild;
+                    parentNode = currentNode.Parent;
+                }
+                else
+                {
+                    currentNode = parentNode;
+                    if (currentNode == null && parentNode == null) return;  //Для выхода из цикла
+                    parentNode = parentNode?.Parent;
+                }
+
+            }
+        }
+
+        private void PrintTreeRecurs(TreeNode root, string indent = "")
+        {
+            if (root != null)
+            {
+                Console.WriteLine($"| {indent} {root.Value}");
+
+                indent += new string(' ', 3);
+                PrintTreeRecurs(root.LeftChild, indent);
+                PrintTreeRecurs(root.RightChild, indent);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ namespace AlgoritmsLesson4Task2
     class TreeNode
     {
         int _value;
+        int _depth;
         TreeNode _leftChild;
         TreeNode _rightChild;
         TreeNode _parent;
@@ -15,6 +16,11 @@ namespace AlgoritmsLesson4Task2
         {
             get { return _value; }
             set { _value = value; }
+        }
+        public int Depth
+        {
+            get { return _depth; }
+            set { _depth = value; }
         }
         public TreeNode LeftChild
         {
