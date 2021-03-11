@@ -297,5 +297,62 @@ namespace AlgoritmsLesson4Task2
                 PrintTreeRecurs(root.RightChild, indent);
             }
         }
+
+        public TreeNode BFS(int searchedVal)
+        {
+            if (_root == null) return null;
+
+            TreeNode currentNode;
+
+            Queue<TreeNode> queueTreeNode = new Queue<TreeNode>();
+            queueTreeNode.Enqueue(_root);
+
+            while (queueTreeNode.Count != 0)
+            {
+                currentNode = queueTreeNode.Dequeue();
+
+                if (currentNode.Value == searchedVal)
+                {
+                    Console.Write($"{currentNode.Value} = {searchedVal};   ");
+                    return currentNode;
+                }
+                else
+                {
+                    Console.Write($"{currentNode.Value} != {searchedVal};   ");
+                    if (currentNode.LeftChild != null) queueTreeNode.Enqueue(currentNode.LeftChild);
+                    if (currentNode.RightChild != null) queueTreeNode.Enqueue(currentNode.RightChild);
+                }
+            }
+
+            return null;
+        }
+
+        public TreeNode DFS(int searchedVal)
+        {
+            if (_root == null) return null;
+            TreeNode currentNode;
+            Stack<TreeNode> stackTreeNode = new Stack<TreeNode>();
+
+            stackTreeNode.Push(_root);
+
+            while (stackTreeNode.Count != 0)
+            {
+                currentNode = stackTreeNode.Pop();
+
+                if (currentNode.Value == searchedVal)
+                {
+                    Console.Write($"{currentNode.Value} = {searchedVal};   ");
+                    return currentNode;
+                }
+                else
+                {
+                    Console.Write($"{currentNode.Value} != {searchedVal};   ");
+                    if (currentNode.LeftChild != null) stackTreeNode.Push(currentNode.LeftChild);
+                    if (currentNode.RightChild != null) stackTreeNode.Push(currentNode.RightChild);
+                }
+            }
+
+            return null;
+        }
     }
 }
