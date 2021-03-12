@@ -100,7 +100,7 @@ namespace TestForLesson5
             TreeNode expected = binaryTree.GetNodeByValue(123);
 
             //Act
-            TreeNode actual = binaryTree.BFS(123);
+            TreeNode actual = binaryTree.DFS(123);
             //Assert
             Assert.AreEqual(expected, actual);
         }
@@ -133,7 +133,7 @@ namespace TestForLesson5
             TreeNode expected = binaryTree.GetNodeByValue(60);
 
             //Act
-            TreeNode actual = binaryTree.BFS(60);
+            TreeNode actual = binaryTree.DFS(60);
             //Assert
             Assert.AreEqual(expected, actual);
         }
