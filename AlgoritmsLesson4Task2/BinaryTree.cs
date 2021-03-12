@@ -235,6 +235,9 @@ namespace AlgoritmsLesson4Task2
             PrintTreeRecurs(root);
         }
 
+        /// <summary>
+        /// Выполняется печать дерева последовательно проходя по веткам (сначала левая, потом правая)
+        /// </summary>
         private void PrintTreeUnRecurs()
         {
             if (root == null) return;
@@ -253,9 +256,9 @@ namespace AlgoritmsLesson4Task2
 
             while (true)
             {
-                if (!isUsed.Contains(currentNode))
+                if (!isUsed.Contains(currentNode))  //Печать текущего нода
                 {
-                    indent = new string(' ', (currentNode.Depth-1) * 3);
+                    indent = new string(' ', (currentNode.Depth-1) * 3);    //Формирование отступа для последующей печати нода
                     Console.WriteLine($"|{indent} {vector}({currentNode.Value})");
                     isUsed.Add(currentNode);
                 }
@@ -282,6 +285,11 @@ namespace AlgoritmsLesson4Task2
             }
         }
 
+        /// <summary>
+        /// Рекурсивный метод печати дерева
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="indent"></param>
         private void PrintTreeRecurs(TreeNode root, string indent = "")
         {
             if (root != null)
