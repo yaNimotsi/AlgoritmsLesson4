@@ -44,7 +44,8 @@ namespace AlgoritmsLesson4Task2
 
             if (treeNode == null) return false;
 
-            return treeNode._value == Value && treeNode.LeftChild == _leftChild && treeNode._rightChild == RightChild;
+            return treeNode._value == Value && treeNode?.LeftChild?.Value == _leftChild?.Value && 
+                treeNode?._rightChild?.Value == RightChild?.Value && treeNode.Depth == _depth;
         }
 
         public override int GetHashCode()

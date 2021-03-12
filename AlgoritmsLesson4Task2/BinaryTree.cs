@@ -362,5 +362,64 @@ namespace AlgoritmsLesson4Task2
 
             return null;
         }
+
+        public override int GetHashCode()
+        {
+
+            if (_root == null) return 0;
+
+            Queue<TreeNode> queueTreeNode = new Queue<TreeNode>();
+            queueTreeNode.Enqueue(_root);
+
+            TreeNode currentNode;
+
+            int sumHash = 0;
+
+            while(queueTreeNode.Count != 0)
+            {
+                currentNode = queueTreeNode.Dequeue();
+                sumHash = sumHash ^ currentNode.GetHashCode();
+
+                if (currentNode.LeftChild != null) queueTreeNode.Enqueue(currentNode.LeftChild);
+                if (currentNode.RightChild != null) queueTreeNode.Enqueue(currentNode.RightChild);
+            }
+
+            return sumHash;
+        }
+
+        public override bool Equals(object obj)
+        {
+            BinaryTree binaryTree = obj as BinaryTree;
+
+            if (binaryTree == null) return false;
+
+            Queue<TreeNode> queueExpectedTree = new Queue<TreeNode>();  //Очередь первого дерева
+            queueExpectedTree.Enqueue(_root);
+
+            Queue<TreeNode> queueActualTree = new Queue<TreeNode>();    //Очередь второго дерева
+            queueActualTree.Enqueue(binaryTree.GetRoot());
+
+            TreeNode nodeInExpectedTree;
+            TreeNode nodeActualTree;
+
+            while (queueExpectedTree.Count != 0 && queueActualTree.Count != 0)
+            {   //Если кол-во элементов в очереди у одной очереди 0, а у другой > 0 возвращаем false деревья не равны
+                if ((queueExpectedTree.Count == 0 && queueActualTree.Count > 0) || 
+                    (queueExpectedTree.Count > 0 && queueActualTree.Count == 0)) return false;
+
+                nodeInExpectedTree = queueExpectedTree.Dequeue();
+                nodeActualTree = queueActualTree.Dequeue();
+
+                if (!nodeInExpectedTree.Equals(nodeActualTree)) return false;   //Если текущие ноды не равны вернем false
+
+                if (nodeInExpectedTree.LeftChild != null) queueExpectedTree.Enqueue(nodeInExpectedTree.LeftChild);
+                if (nodeInExpectedTree.RightChild != null) queueExpectedTree.Enqueue(nodeInExpectedTree.RightChild);
+
+                if (nodeActualTree.LeftChild != null) queueActualTree.Enqueue(nodeActualTree.LeftChild);
+                if (nodeActualTree.RightChild != null) queueActualTree.Enqueue(nodeActualTree.RightChild);
+            }
+
+            return true;
+        }
     }
 }
