@@ -28,7 +28,7 @@ namespace AlgoritmsLesson4Task2
 
             TreeNode treeNode = binaryTree.GetNodeByValue(3);
 
-            //binaryTree.RemoveItem(30);
+            binaryTree.RemoveItem(30);
 
             binaryTree.PrintTree();
         }
